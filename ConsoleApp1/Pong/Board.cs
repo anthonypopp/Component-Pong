@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApp1
+namespace ComponentConsolePong
 {
-	public class Board : Thing, Drawable, Resetable
+	public class Board : GameObject, Drawable, Resetable
 	{
 		public Board() : base()
 		{
@@ -25,7 +25,7 @@ namespace ConsoleApp1
 				((Cell)owner).Letter = letter;
 			}
 		}
-		public class Cell : Thing
+		public class Cell : GameObject
 		{
 			private char letter = '.';
 
@@ -42,7 +42,7 @@ namespace ConsoleApp1
 		const int WIDTH = 20;
 		const int HEIGHT = 80;
 
-		public void Init(List<Thing> things)
+		public void Init(List<GameObject> things)
 		{
 
 			 text = new StringBuilder();
@@ -63,8 +63,8 @@ namespace ConsoleApp1
 		{
 			int xIndex = (int)((x * WIDTH) / 100.0f);
 			int yIndex = (int)((y * HEIGHT) / 100.0f);
-			xIndex = xIndex.Clamp(0, WIDTH - 1);
-			yIndex = yIndex.Clamp(0, HEIGHT - 1);
+			xIndex = MathHelper.Clamp(xIndex, 0, WIDTH - 1);
+			yIndex = MathHelper.Clamp(yIndex, 0, HEIGHT - 1);
 			return paint[xIndex][yIndex];
 		}
 		

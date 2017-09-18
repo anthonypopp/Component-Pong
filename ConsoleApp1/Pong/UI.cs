@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApp1
+namespace ComponentConsolePong
 {
 	public struct Vector2
 	{
@@ -49,47 +49,29 @@ namespace ConsoleApp1
 			return new Vector2(l.x / div, l.y / div);
 		}
 	}
-	public interface Updateable
-	{
-		void Update(float deltaTime);
-	}
-
-	//Called after all initilization has been done and at the start of a new game
-	public interface Resetable
-	{
-		void Reset();
-	}
-	public interface Drawable
-	{
-		void Draw(Board board);
-		char GetChar();
-	}
-	public interface Inputable
-	{
-	}
 
 	public class Component
 	{
 		public bool enabled = true;
-		public Component(Thing owner)
+		public Component(GameObject owner)
 		{
 			this.owner = owner ?? throw new Exception("Cannot have a null owner");
 			rect = owner.rect;
 		}
-		public Thing owner;
+		public GameObject owner;
 		public Rectangle rect;
 	}
 
-	public class PaddleMover : Mover, Inputable
+	public class PaddleMover : Mover
 	{
 		Rectangle bounds;
 		bool actiated = false;
-		public PaddleMover(Thing owner, Rectangle bounds, float speedX, Process process, Process noDo) : base(owner, speedX, 0)
+		public PaddleMover(GameObject owner, Rectangle bounds, float speedX, Process doProcess, Process dontProcess) : base(owner, speedX, 0)
 		{
 			enabled = false;
 			this.bounds = bounds;
-			InputHelper.Register(Do, process);
-			InputHelper.Register(Dont, noDo);
+			InputHelper.Register(Do, doProcess);
+			InputHelper.Register(Dont, dontProcess);
 		}
 
 		public override void Update(float deltaTime)
@@ -116,7 +98,7 @@ namespace ConsoleApp1
 		List<Paddle> paddles = new List<Paddle>();
 		WallReflector mover;
 
-		public PaddleCollision(Thing owner, float framesToWait, float speedMultiplier) : base(owner)
+		public PaddleCollision(GameObject owner, float framesToWait, float speedMultiplier) : base(owner)
 		{
 			framesLeft = 0;
 			this.framesToWait = framesToWait;
@@ -125,7 +107,7 @@ namespace ConsoleApp1
 
 		public void Reset()
 		{
-			paddles = Thing.GetThingsInGame<Paddle>();
+			paddles = GameObject.GetThingsInGame<Paddle>();
 			mover = owner.GetComponent<WallReflector>();
 			framesLeft = 0;
 		}
@@ -158,7 +140,7 @@ namespace ConsoleApp1
 
 	public class Mover : Component, Updateable
 	{
-		public Mover(Thing owner, float speedX, float speedY)
+		public Mover(GameObject owner, float speedX, float speedY)
 			: base(owner)
 		{
 			this.speedX = speedX;
@@ -173,7 +155,7 @@ namespace ConsoleApp1
 	}
 	public class WallReflector : Mover
 	{
-		public WallReflector(Thing owner, float speedX, float speedY, Rectangle bounds)
+		public WallReflector(GameObject owner, float speedX, float speedY, Rectangle bounds)
 			: base(owner, speedX, speedY)
 		{
 			this.bounds = bounds;
@@ -196,7 +178,7 @@ namespace ConsoleApp1
 	// marks this as making things want to move towards it
 	public class Attractor : Component
 	{
-		public Attractor(Thing owner) : base(owner)
+		public Attractor(GameObject owner) : base(owner)
 		{
 		}
 	}
@@ -206,14 +188,14 @@ namespace ConsoleApp1
 	{
 		List<Attractor> attractors;
 		public float attractSpeed;
-		public Attractee(Thing owner, float attractSpeed) : base(owner)
+		public Attractee(GameObject owner, float attractSpeed) : base(owner)
 		{
 			this.attractSpeed = attractSpeed;
 		}
 
 		public void Reset()
 		{
-			attractors = Thing.GetComponentsInGame<Attractor>();
+			attractors = GameObject.GetComponentsInGame<Attractor>();
 		}
 
 		public virtual void Update(float deltaTime)
@@ -333,11 +315,14 @@ namespace ConsoleApp1
 		}
 	}
 
-	public class Thing
+	/// <summary>
+	/// Similar to Game Objects in Unity, but the name is a bit more generic
+	/// </summary>
+	public class GameObject
 	{
-		public static Thing ROOT;
+		public static GameObject ROOT;
 
-		protected Thing()
+		protected GameObject()
 		{
 			if (ROOT == null)
 			{
@@ -353,7 +338,7 @@ namespace ConsoleApp1
 			ROOT = this;
 		}
 
-		public void SetParent(Thing thing)
+		public void SetParent(GameObject thing)
 		{
 			if (this == thing)
 			{
@@ -368,8 +353,8 @@ namespace ConsoleApp1
 			parent = thing;
 		}
 
-		Thing parent;
-		List<Thing> children = new List<Thing>();
+		GameObject parent;
+		List<GameObject> children = new List<GameObject>();
 		List<Component> components = new List<Component>();
 		Dictionary<Type, Component> lookup = new Dictionary<Type, Component>();
 
@@ -378,21 +363,21 @@ namespace ConsoleApp1
 
 
 		//Thing Getting
-		public static List<T> GetThingsInGame<T>(bool allowSubclasses = true) where T : Thing
+		public static List<T> GetThingsInGame<T>(bool allowSubclasses = true) where T : GameObject
 		{
 			return ROOT.GetThingsInChildren<T>(allowSubclasses);
 		}
-		public List<T> GetThingsInChildren<T>(bool allowSubclasses) where T : Thing
+		public List<T> GetThingsInChildren<T>(bool allowSubclasses) where T : GameObject
 		{
 			return GetThingsInChildren(new List<T>(), allowSubclasses);
 		}
-		private List<T> GetThingsInChildren<T>(List<T> result, bool allowSubclasses) where T : Thing
+		private List<T> GetThingsInChildren<T>(List<T> result, bool allowSubclasses) where T : GameObject
 		{
 			if (Is<T>())
 			{
 				result.Add((T)this);
 			}
-			foreach (Thing child in children)
+			foreach (GameObject child in children)
 			{
 				child.GetThingsInChildren(result, allowSubclasses);
 			}
@@ -414,7 +399,7 @@ namespace ConsoleApp1
 			{
 				result.Add(t);
 			}
-			foreach (Thing child in children)
+			foreach (GameObject child in children)
 			{
 				child.GetComponentsInChildren(result);
 			}
@@ -442,7 +427,7 @@ namespace ConsoleApp1
 			//Todo, lookup list of same component instead
 		}
 
-		public bool Is<T>(bool includeSubclass = true) where T : Thing
+		public bool Is<T>(bool includeSubclass = true) where T : GameObject
 		{
 			return ((!includeSubclass || typeof(T).IsSubclassOf(GetType())) || this is T);
 		}
@@ -481,7 +466,7 @@ namespace ConsoleApp1
 			}
 		}
 
-		public void AddChild(Thing thing)
+		public void AddChild(GameObject thing)
 		{
 			if (thing.parent != null)
 			{
@@ -498,17 +483,17 @@ namespace ConsoleApp1
 		}
 	}
 
-	public class ScoreThing : Thing
+	public class ScoreObject : GameObject
 	{
-		public ScoreThing(Rectangle scoreRect, int player) : base()
+		public ScoreObject(Rectangle scoreRect, int player) : base()
 		{
 			rect.Set(scoreRect.position, scoreRect.dimention);
 			AddComponent(new Score(this, player));
 		}
 	}
-	public class DrawableThing : Thing, Drawable
+	public class DrawableObject : GameObject, Drawable
 	{
-		public DrawableThing() : base()
+		public DrawableObject() : base()
 		{
 		}
 		public virtual void Draw(Board board)
@@ -530,7 +515,7 @@ namespace ConsoleApp1
 
 	}
 
-	public class Entity : DrawableThing, Resetable
+	public class Entity : DrawableObject, Resetable
 	{
 		public Entity() : base()
 		{
@@ -562,7 +547,7 @@ namespace ConsoleApp1
 	//Marks a component as being able to make scores
 	public class Scoreable : Component
 	{
-		public Scoreable(Thing owner) : base(owner)
+		public Scoreable(GameObject owner) : base(owner)
 		{
 		}
 	}
@@ -572,7 +557,7 @@ namespace ConsoleApp1
 		public int playerNum;
 		List<Scoreable> scoreable;
 		Dictionary<Scoreable, bool> collidingBook;
-		public Score(Thing owner, int playerNum) : base(owner)
+		public Score(GameObject owner, int playerNum) : base(owner)
 		{
 			this.playerNum = playerNum;
 			scoreable = new List<Scoreable>();
@@ -583,7 +568,7 @@ namespace ConsoleApp1
 		{
 			score = 0;
 			scoreable.Clear();
-			scoreable = Thing.GetComponentsInGame<Scoreable>();
+			scoreable = GameObject.GetComponentsInGame<Scoreable>();
 			collidingBook = new Dictionary<Scoreable, bool>();
 			foreach (Scoreable s in scoreable)
 			{
@@ -629,8 +614,8 @@ namespace ConsoleApp1
 		{
 			base.Reset();
 			rect.Set(50, 90, 20, 5).Centerfy();
-			AddComponent(new PaddleMover(this, ROOT.rect, -3, Process.MOVE_POSITIVE));
-			AddComponent(new PaddleMover(this, ROOT.rect, 3, Process.MOVE_NEGATIVE));
+			AddComponent(new PaddleMover(this, ROOT.rect, -3, Process.MOVE_POSITIVE, Process.NO_MOVE_POSITIVE));
+			AddComponent(new PaddleMover(this, ROOT.rect, 3, Process.MOVE_NEGATIVE, Process.NO_MOVE_NEGATIVE));
 		}
 	}
 	public class AIPaddle : Paddle
@@ -649,12 +634,7 @@ namespace ConsoleApp1
 
 		
 	}
-
-	public interface Messageable
-	{
-		void Write();
-	}
-	public class Messenger : Thing, Messageable
+	public class Messenger : GameObject, Messageable
 	{
 		public virtual void Write()
 		{

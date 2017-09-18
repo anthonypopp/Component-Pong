@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApp1
+namespace ComponentConsolePong
 {
-	public class TimeHelper : Thing, Resetable
+	public class TimeHelper : GameObject, Resetable
 	{
 		public static float TIME_SCALE = 1.0f;
 		public TimeHelper(int scoreToBeat, Action resetGameAction) : base()
@@ -21,12 +21,12 @@ namespace ConsoleApp1
 		}
 	}
 
-	public class ResetGame : Component, Updateable, Inputable, Resetable, Messageable
+	public class ResetGame : Component, Updateable, Resetable, Messageable
 	{
 		bool canReset;
 		string message;
 		private Action resetActionOnEndGame;
-		public ResetGame(Thing owner, Action resetActionOnEndGame) : base(owner)
+		public ResetGame(GameObject owner, Action resetActionOnEndGame) : base(owner)
 		{
 			this.resetActionOnEndGame = resetActionOnEndGame;
 			InputHelper.Register(Do, Process.RESET_GAME);
@@ -38,11 +38,6 @@ namespace ConsoleApp1
 			{
 				resetActionOnEndGame();
 			}
-		}
-
-		public void Dont()
-		{
-			//Do nothing here
 		}
 
 		public void Reset()
@@ -75,14 +70,14 @@ namespace ConsoleApp1
 		string title = "";
 		Score winner = null;
 		int scoreToWin;
-		public EndGame(Thing owner, int scoreToWin) : base(owner)
+		public EndGame(GameObject owner, int scoreToWin) : base(owner)
 		{
 			this.scoreToWin = scoreToWin;
 		}
 
 		public void Reset()
 		{
-			scores = Thing.GetComponentsInGame<Score>();
+			scores = GameObject.GetComponentsInGame<Score>();
 			winner = scores[0];
 			title = "";
 		}

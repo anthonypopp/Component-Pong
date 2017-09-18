@@ -6,15 +6,17 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 
 
-namespace ConsoleApp1
+namespace ComponentConsolePong
 {
-
+	/// <summary>
+	/// An action that is associated with input
+	/// </summary>
 	public enum Process
 	{
 		MOVE_POSITIVE,
 		MOVE_NEGATIVE,
+		NO_MOVE_POSITIVE,
 		NO_MOVE_NEGATIVE,
-		NO
 		RESET_GAME,
 		COUNT
 	}
@@ -22,6 +24,9 @@ namespace ConsoleApp1
 	public static class InputHelper
 	{
 
+		/// <summary>
+		/// The key assocated with a given input
+		/// </summary>
 		public enum KeyRelationShip
 		{
 			UP_KEY = Key.Up,
@@ -29,7 +34,9 @@ namespace ConsoleApp1
 			R_KEY = Key.R,
 		}
 		
-
+		/// <summary>
+		/// The means of which input is occuring
+		/// </summary>
 		public enum KeyAction
 		{
 			HELD_DOWN,
@@ -38,6 +45,9 @@ namespace ConsoleApp1
 			NOT_PRESSED
 		}
 
+		/// <summary>
+		/// A process that connects input to actions performed in game
+		/// </summary>
 		private class Processe
 		{
 			KeyAction action;
@@ -72,14 +82,18 @@ namespace ConsoleApp1
 				return false;
 			}
 		}
-		static Dictionary<Process, List<Action>> register = new Dictionary<Process, List<Action>>();
-		static Dictionary<Process, Processe> inputBook = new Dictionary<Process, Processe>();
+
+		private static Dictionary<Process, List<Action>> register = new Dictionary<Process, List<Action>>();
+		private static Dictionary<Process, Processe> inputBook = new Dictionary<Process, Processe>();
 
 		public static void Init()
 		{
+			inputBook.Add(Process.NO_MOVE_POSITIVE, new Processe(KeyAction.NOT_PRESSED, KeyRelationShip.UP_KEY));
+			inputBook.Add(Process.NO_MOVE_NEGATIVE, new Processe(KeyAction.NOT_PRESSED, KeyRelationShip.DOWN_KEY));
 			inputBook.Add(Process.MOVE_NEGATIVE, new Processe(KeyAction.HELD_DOWN, KeyRelationShip.DOWN_KEY));
 			inputBook.Add(Process.MOVE_POSITIVE, new Processe(KeyAction.HELD_DOWN, KeyRelationShip.UP_KEY));
 			inputBook.Add(Process.RESET_GAME, new Processe(KeyAction.HELD_DOWN, KeyRelationShip.R_KEY));
+			
 			for (int i = 0; i < (int)Process.COUNT; i++)
 			{
 				register.Add((Process)i, new List<Action>());
