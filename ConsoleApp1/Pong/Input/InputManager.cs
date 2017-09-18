@@ -22,8 +22,10 @@ namespace ComponentConsolePong.Input
 			inputBook.Add(Process.NO_MOVE_NEGATIVE, new Processe(KeyAction.JUST_RELEASED, KeyRelationShip.DOWN_KEY));
 			inputBook.Add(Process.MOVE_NEGATIVE, new Processe(KeyAction.JUST_PRESSED, KeyRelationShip.DOWN_KEY));
 			inputBook.Add(Process.MOVE_POSITIVE, new Processe(KeyAction.JUST_PRESSED, KeyRelationShip.UP_KEY));
-			inputBook.Add(Process.RESET_GAME, new Processe(KeyAction.HELD_DOWN, KeyRelationShip.R_KEY));
-			
+			inputBook.Add(Process.RESET_GAME, new Processe(KeyAction.JUST_PRESSED, KeyRelationShip.R_KEY));
+			inputBook.Add(Process.QUIT_GAME, new Processe(KeyAction.JUST_PRESSED, KeyRelationShip.Q_KEY));
+
+
 			for (int i = 0; i < (int)Process.COUNT; i++)
 			{
 				register.Add((Process)i, new Dictionary<object, List<Action>>());
@@ -55,16 +57,12 @@ namespace ComponentConsolePong.Input
 				}
 			}
 		}
-
-		//todo, add unregister
-
+		
 		public static void Update()
 		{
 			for (int i = 0; i < (int)Process.COUNT; i++)
 			{
-
 				Dictionary<Object, List<Action>> book = register[(Process)i];
-
 				foreach (List<Action> inputs in book.Values)
 				{
 					inputBook[(Process)i].Update();

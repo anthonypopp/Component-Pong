@@ -13,7 +13,8 @@ namespace ComponentConsolePong
 			InputManager.Init();
 			Pong pong = new Pong();
 
-			while (true)
+			//Keep Playing Until the game has ended
+			while (pong.running)
 			{
 				InputManager.Update();
 				pong.Update(TimeManager.TIME_SCALE);
@@ -23,6 +24,7 @@ namespace ComponentConsolePong
 				pong.Draw();
 				pong.Write();
 			}
+			pong.Quit();
         }
     }
 }

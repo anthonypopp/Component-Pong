@@ -72,7 +72,7 @@
     <Compile Include="Pong\Math\MathHelper.cs" />
     <Compile Include="Pong\Components\Component.cs" />
     <Compile Include="Pong\Components\Attract.cs" />
-    <Compile Include="Pong\Input\InputHelper.cs" />
+    <Compile Include="Pong\Input\InputManager.cs" />
     <Compile Include="Pong\GameObjects\Entities\PlayerPaddle.cs" />
     <Compile Include="Pong\GameObjects\Entities\Paddle.cs" />
     <Compile Include="Pong\GameObjects\MessageableAdapter.cs" />

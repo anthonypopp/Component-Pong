@@ -9,6 +9,7 @@ namespace ComponentConsolePong
 	{
 		List<GameObject> gameObjects;
 		Board board;
+		public bool running = true;
 
 		public Pong()
 		{
@@ -25,7 +26,7 @@ namespace ComponentConsolePong
 
 		public void Init(List<GameObject> gameObjects)
 		{
-			gameObjects.Add(new TimeManager(10, Reset));
+			gameObjects.Add(new TimeManager(10, Reset, StopGame));
 			gameObjects.Add(new Ball(4, 2));
 			gameObjects.Add(new Ball(3, 4));
 			gameObjects.Add(new PlayerPaddle());
@@ -38,7 +39,7 @@ namespace ComponentConsolePong
 		}
 
 		
-		public void Reset()
+		private void Reset()
 		{
 			foreach (GameObject thing in gameObjects)
 			{
@@ -88,5 +89,14 @@ namespace ComponentConsolePong
 				gameObject.Quit();
 			}
 		}
+
+		/// <summary>
+		/// Called when the game should no longer execute. Game will then quit after next draw cycle
+		/// </summary>
+		private void StopGame()
+		{
+			running = false;
+		}
+
 	}
 }

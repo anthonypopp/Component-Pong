@@ -12,5 +12,6 @@ namespace ComponentConsolePong.Input
 		UP_KEY = Key.Up,
 		DOWN_KEY = Key.Down,
 		R_KEY = Key.R,
+		Q_KEY = Key.Q
 	}
 }

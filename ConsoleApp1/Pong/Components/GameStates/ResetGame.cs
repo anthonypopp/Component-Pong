@@ -8,26 +8,38 @@ namespace ComponentConsolePong
 	/// </summary>
 	public class ResetGame : Component, Updateable, Resetable, Messageable
 	{
-		bool canReset;
+		bool gameEnded;
 		string message;
-		private Action resetActionOnEndGame;
-		public ResetGame(GameObject owner, Action resetActionOnEndGame) : base(owner)
+		private Action resetAction;
+		private Action quitAction;
+		public ResetGame(GameObject owner, Action resetAction, Action quitAction) : base(owner)
 		{
-			this.resetActionOnEndGame = resetActionOnEndGame;
+			this.resetAction = resetAction;
+			this.quitAction = quitAction;
 			InputManager.Register(this, OnReset, Process.RESET_GAME);
+			InputManager.Register(this, OnQuit, Process.QUIT_GAME);
 		}
 		
 		public void OnReset()
 		{
-			if (canReset)
+			if (gameEnded)
 			{
-				resetActionOnEndGame();
+				resetAction();
 			}
+		}
+
+
+		public void OnQuit()
+		{
+			//if (gameEnded)
+			//{
+				quitAction();
+			//}
 		}
 
 		public void Reset()
 		{
-			canReset = false;
+			gameEnded = false;
 			message = "";
 		}
 
@@ -35,12 +47,12 @@ namespace ComponentConsolePong
 		{
 			if (deltaTime == 0)
 			{
-				message = "Game is done, please press R to restart";
-				canReset = true;
+				message = "Game is done, please press R to restart or Q to quit";
+				gameEnded = true;
 			}
 			else
 			{
-				message = "The Game is currently running";
+				message = "The Game is currently running, Press Q to quit game";
 			}
 		}
 
