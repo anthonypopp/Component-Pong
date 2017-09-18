@@ -5,8 +5,6 @@ using ComponentConsolePong.Input;
 
 namespace ComponentConsolePong
 {
-
-
 	public interface Identifyable
 	{
 		string Name();
