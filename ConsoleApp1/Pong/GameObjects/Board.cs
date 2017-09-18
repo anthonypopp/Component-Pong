@@ -1,17 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ComponentConsolePong
 {
+	/// <summary>
+	/// A <see cref="GameObject"/> that allows text to be rendered in Raster Format to the console
+	/// </summary>
 	public class Board : GameObject, Drawable, Resetable
 	{
 		public Board() : base()
 		{
 		}
-		public class LetterSetter : Component, Updateable
+
+		/// <summary>
+		/// A Component Responsible for updating the "pixel" or character being rendered in a <see cref="Cell"/>
+		/// </summary>
+		private class LetterSetter : Component, Updateable
 		{
 			char letter;
 			public LetterSetter(Cell owner, char letter)
@@ -25,6 +30,10 @@ namespace ComponentConsolePong
 				((Cell)owner).Letter = letter;
 			}
 		}
+
+		/// <summary>
+		/// Represents a single "pixel" or character on the screen
+		/// </summary>
 		public class Cell : GameObject
 		{
 			private char letter = '.';

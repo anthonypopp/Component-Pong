@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ComponentConsolePong
 {
+	/// <summary>
+	/// Base for all things game's of Pong
+	/// </summary>
 	class Pong
 	{
 		List<GameObject> things;
@@ -26,8 +25,7 @@ namespace ComponentConsolePong
 
 		public void Init(List<GameObject> things)
 		{
-
-			things.Add(new TimeHelper(10, Reset));
+			things.Add(new TimeManager(10, Reset));
 			things.Add(new Ball(4, 2));
 			things.Add(new Ball(3, 4));
 			things.Add(new PlayerPaddle());

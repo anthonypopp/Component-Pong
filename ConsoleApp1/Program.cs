@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ComponentConsolePong.Input;
 
 namespace ComponentConsolePong
 {
@@ -337,13 +336,13 @@ namespace ComponentConsolePong
 		[STAThread] //required for input helper
 		static void Main(string[] args)
         {
-			InputHelper.Init();
+			InputManager.Init();
 			Pong pong = new Pong();
 
 			while (true)
 			{
-				InputHelper.Update();
-				pong.Update(TimeHelper.TIME_SCALE);
+				InputManager.Update();
+				pong.Update(TimeManager.TIME_SCALE);
 
 				System.Threading.Thread.Sleep(20);
 
