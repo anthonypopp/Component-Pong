@@ -46,7 +46,7 @@ namespace ComponentConsolePong
 
 		public void Write()
 		{
-			Program.WriteMessage(message);
+			Log.DisplayMessage(message);
 		}
 	}
 }

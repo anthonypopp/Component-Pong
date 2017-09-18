@@ -12,7 +12,7 @@
 
 		protected virtual void Write(string message)
 		{
-			Program.WriteMessage(message);
+			Log.DisplayMessage('\n' + message);
 		}
 	}
 }
