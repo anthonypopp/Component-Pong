@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using ComponentConsolePong.Input;
 
 namespace ComponentConsolePong
 {
 	/// <summary>
 	/// Similar to Game Objects in Unity
 	/// </summary>
-	public class GameObject
+	public class GameObject : Quitable
 	{
 		/// <summary>Top topmost GameObject in the game. All GameObjets are children of this</summary>
 		public static GameObject ROOT;
@@ -234,6 +235,16 @@ namespace ComponentConsolePong
 			else
 			{
 				throw new Exception("Cannot Add ROOT as child");
+			}
+		}
+
+		public virtual void Quit()
+		{
+			//Unregister inputs
+			InputManager.Unregister(this);
+			foreach (Component component in components)
+			{
+				component.Quit();
 			}
 		}
 	}

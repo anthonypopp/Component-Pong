@@ -52,7 +52,7 @@ namespace ComponentConsolePong
 
 		public void Write()
 		{
-			Log.DisplayMessage(title);
+			Log.Print(title);
 		}
 	}
 }

@@ -12,8 +12,8 @@ namespace ComponentConsolePong
 		{
 			enabled = false;
 			this.bounds = bounds;
-			InputManager.Register(OnMovePaddle, onMoveProcess);
-			InputManager.Register(OnStopPaddle, onStopProcess);
+			InputManager.Register(this, OnMovePaddle, onMoveProcess);
+			InputManager.Register(this, OnStopPaddle, onStopProcess);
 		}
 
 		public override void Update(float deltaTime)

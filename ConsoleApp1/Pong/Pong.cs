@@ -7,7 +7,7 @@ namespace ComponentConsolePong
 	/// </summary>
 	class Pong
 	{
-		List<GameObject> things;
+		List<GameObject> gameObjects;
 		Board board;
 
 		public Pong()
@@ -15,32 +15,32 @@ namespace ComponentConsolePong
 			board = new Board();
 			board.MakeRoot();
 
-			things = new List<GameObject>();
-			Init(things);
+			gameObjects = new List<GameObject>();
+			Init(gameObjects);
 
-			board.Init(things);
+			board.Init(gameObjects);
 			
 			Reset();
 		}
 
-		public void Init(List<GameObject> things)
+		public void Init(List<GameObject> gameObjects)
 		{
-			things.Add(new TimeManager(10, Reset));
-			things.Add(new Ball(4, 2));
-			things.Add(new Ball(3, 4));
-			things.Add(new PlayerPaddle());
-			things.Add(new AIPaddle(0.1f));
-			things.Add(new AIPaddle(0.5f));
-			things.Add(new TitleMessenger("Let's get ready to Rubleeee!!!!!!"));
-			things.Add(new ScoreMessenger());
-			things.Add(new ScoreObject(new Rectangle(0, 0, 100, 2), 1));
-			things.Add(new ScoreObject(new Rectangle(0, 98, 100,2), 2));
+			gameObjects.Add(new TimeManager(10, Reset));
+			gameObjects.Add(new Ball(4, 2));
+			gameObjects.Add(new Ball(3, 4));
+			gameObjects.Add(new PlayerPaddle());
+			gameObjects.Add(new AIPaddle(0.1f));
+			gameObjects.Add(new AIPaddle(0.5f));
+			gameObjects.Add(new TitleMessenger("Let's get ready to Rubleeee!!!!!!"));
+			gameObjects.Add(new ScoreMessenger());
+			gameObjects.Add(new ScoreObject(new Rectangle(0, 0, 100, 2), 1));
+			gameObjects.Add(new ScoreObject(new Rectangle(0, 98, 100,2), 2));
 		}
 
 		
 		public void Reset()
 		{
-			foreach (GameObject thing in things)
+			foreach (GameObject thing in gameObjects)
 			{
 				thing.ResetComponents();
 				if (typeof(Resetable).IsAssignableFrom(thing.GetType()))
@@ -52,32 +52,40 @@ namespace ComponentConsolePong
 
 		public void Update(float deltaTime)
 		{
-			foreach (GameObject thing in things)
+			foreach (GameObject gameObject in gameObjects)
 			{
-				thing.UpdateComponents(deltaTime);
+				gameObject.UpdateComponents(deltaTime);
 			}
 		}
 
 		public void Write()
 		{
-			foreach (GameObject thing in things)
+			foreach (GameObject gameObject in gameObjects)
 			{
-				thing.WriteComponents();
-				if (typeof(Messageable).IsAssignableFrom(thing.GetType()))
+				gameObject.WriteComponents();
+				if (typeof(Messageable).IsAssignableFrom(gameObject.GetType()))
 				{
-					((Messageable)thing).Write();
+					((Messageable)gameObject).Write();
 				}
 			}
 		}
 
 		public void Draw()
 		{
-			foreach (GameObject thing in things)
+			foreach (GameObject gameObject in gameObjects)
 			{
-				if (typeof(Drawable).IsAssignableFrom(thing.GetType()))
+				if (typeof(Drawable).IsAssignableFrom(gameObject.GetType()))
 				{
-					((Drawable)thing).Draw(board);
+					((Drawable)gameObject).Draw(board);
 				}
+			}
+		}
+
+		public void Quit()
+		{
+			foreach (GameObject gameObject in gameObjects)
+			{
+				gameObject.Quit();
 			}
 		}
 	}

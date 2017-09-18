@@ -1,8 +1,9 @@
 ﻿using System;
+using ComponentConsolePong.Input;
 
 namespace ComponentConsolePong
 {
-	public class Component
+	public class Component : Quitable
 	{
 		public bool enabled = true;
 		public Component(GameObject owner)
@@ -12,5 +13,10 @@ namespace ComponentConsolePong
 		}
 		public GameObject owner;
 		public Rectangle rect;
+
+		public virtual void Quit()
+		{
+			InputManager.Unregister(this);
+		}
 	}
 }

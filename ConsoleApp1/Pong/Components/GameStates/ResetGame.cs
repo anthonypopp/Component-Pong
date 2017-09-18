@@ -14,7 +14,7 @@ namespace ComponentConsolePong
 		public ResetGame(GameObject owner, Action resetActionOnEndGame) : base(owner)
 		{
 			this.resetActionOnEndGame = resetActionOnEndGame;
-			InputManager.Register(OnReset, Process.RESET_GAME);
+			InputManager.Register(this, OnReset, Process.RESET_GAME);
 		}
 		
 		public void OnReset()
@@ -46,7 +46,7 @@ namespace ComponentConsolePong
 
 		public void Write()
 		{
-			Log.DisplayMessage(message);
+			Log.Print(message);
 		}
 	}
 }

@@ -10,7 +10,7 @@ namespace ComponentConsolePong
 		/// <summary>
 		/// Displayed a message to the console that will be seen by players
 		/// </summary>
-		public static void DisplayMessage(string message)
+		public static void Print(string message)
 		{
 			Console.WriteLine('\n' + message);
 		}
