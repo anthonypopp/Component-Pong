@@ -6,7 +6,14 @@ namespace ComponentConsolePong.Input
 	public static class InputManager
 	{
 
+		/// <summary>
+		/// A list of Actions in the game that relate to a given <see cref="Process"/>
+		/// </summary>
 		private static Dictionary<Process, List<Action>> register = new Dictionary<Process, List<Action>>();
+
+		/// <summary>
+		/// A map of <see cref="Processe"/> to a process
+		/// </summary>
 		private static Dictionary<Process, Processe> inputBook = new Dictionary<Process, Processe>();
 
 		public static void Init()
@@ -23,11 +30,15 @@ namespace ComponentConsolePong.Input
 			}
 		}
 
+		/// <summary>
+		/// Registers a Actions to a process. When the process is activated, this actions will be invoked
+		/// </summary>
 		public static void Register(Action action, Process process)
 		{
 			register[process].Add(action);
 		}
-		//todo, add unregister when destoryint of objects happens
+
+		//todo, add unregister
 
 		public static void Update()
 		{
@@ -38,7 +49,7 @@ namespace ComponentConsolePong.Input
 				inputBook[(Process)i].Update();
 				bool active = inputBook[(Process)i].Activated();
 
-				//If a Process is active, call all functions taht have been Registered to it
+				//If a Process is active, call all functions that have been registered to it
 				foreach (Action input in inputs)
 				{
 					if (active)
