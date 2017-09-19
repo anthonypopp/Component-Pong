@@ -5,8 +5,8 @@
 	/// </summary>
 	public class WallBouncer : Mover
 	{
-		public WallBouncer(GameObject owner, float speedX, float speedY, Rectangle bounds)
-			: base(owner, speedX, speedY)
+		public WallBouncer(float speedX, float speedY, Rectangle bounds)
+			: base(speedX, speedY)
 		{
 			this.bounds = bounds;
 		}

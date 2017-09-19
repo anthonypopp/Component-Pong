@@ -9,7 +9,7 @@ namespace ComponentConsolePong
 	// marks this as making things want to move towards it
 	public class Attractor : Component
 	{
-		public Attractor(GameObject owner) : base(owner)
+		public Attractor()
 		{
 		}
 	}
@@ -19,7 +19,7 @@ namespace ComponentConsolePong
 	{
 		List<Attractor> attractors;
 		public float attractSpeed;
-		public Attractee(GameObject owner, float attractSpeed) : base(owner)
+		public Attractee(float attractSpeed)
 		{
 			this.attractSpeed = attractSpeed;
 		}

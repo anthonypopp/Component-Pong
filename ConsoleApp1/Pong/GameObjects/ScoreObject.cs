@@ -8,7 +8,7 @@
 		public ScoreObject(Rectangle scoreRect, int player) : base()
 		{
 			rect.Set(scoreRect.position, scoreRect.dimention);
-			AddComponent(new Score(this, player));
+			AddComponent(new Score(player));
 		}
 	}
 }

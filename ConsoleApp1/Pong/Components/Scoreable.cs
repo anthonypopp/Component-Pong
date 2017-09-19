@@ -5,7 +5,7 @@
 	/// </summary>
 	public class Scoreable : Component
 	{
-		public Scoreable(GameObject owner) : base(owner)
+		public Scoreable() 
 		{
 		}
 	}

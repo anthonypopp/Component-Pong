@@ -13,7 +13,7 @@ namespace ComponentConsolePong
 		private int player;
 		private int score = 0;
 
-		public Score(GameObject owner, int player) : base(owner)
+		public Score(int player)
 		{
 			this.player = player;
 			scoreable = new List<Scoreable>();

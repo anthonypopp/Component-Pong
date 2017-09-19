@@ -6,13 +6,21 @@ namespace ComponentConsolePong
 	public class Component : Quitable
 	{
 		public bool enabled = true;
-		public Component(GameObject owner)
+		public Component()
 		{
-			this.owner = owner ?? throw new Exception("Cannot have a null owner");
-			rect = owner.rect;
 		}
-		public GameObject owner;
-		public Rectangle rect;
+		private GameObject _owner;
+		private Rectangle _rect;
+
+		public GameObject owner { get => _owner;
+			set
+			{
+				_owner = value;
+				_rect = _owner.rect;
+			}
+		}
+
+		public Rectangle rect { get => _rect; }
 
 		public virtual void Quit()
 		{

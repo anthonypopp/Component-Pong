@@ -5,8 +5,7 @@
 	/// </summary>
 	public class Mover : Component, Updateable
 	{
-		public Mover(GameObject owner, float speedX, float speedY)
-			: base(owner)
+		public Mover(float speedX, float speedY)
 		{
 			this.speedX = speedX;
 			this.speedY = speedY;

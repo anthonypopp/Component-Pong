@@ -8,7 +8,7 @@ namespace ComponentConsolePong
 	public class PaddleMover : Mover
 	{
 		Rectangle bounds;
-		public PaddleMover(GameObject owner, Rectangle bounds, float speedX, Process onMoveProcess, Process onStopProcess) : base(owner, speedX, 0)
+		public PaddleMover(Rectangle bounds, float speedX, Process onMoveProcess, Process onStopProcess) : base(speedX, 0)
 		{
 			enabled = false;
 			this.bounds = bounds;

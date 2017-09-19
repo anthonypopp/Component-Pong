@@ -11,7 +11,7 @@ namespace ComponentConsolePong
 		string title = "";
 		Score winner = null;
 		int scoreToWin;
-		public EndGame(GameObject owner, int scoreToWin) : base(owner)
+		public EndGame(int scoreToWin)
 		{
 			this.scoreToWin = scoreToWin;
 		}

@@ -20,7 +20,7 @@ namespace ComponentConsolePong
 		{
 			char letter;
 			public LetterSetter(Cell owner, char letter)
-				:base(owner)
+				:base()
 			{
 				this.letter = letter;
 			}

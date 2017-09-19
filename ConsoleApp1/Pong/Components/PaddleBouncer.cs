@@ -14,7 +14,7 @@ namespace ComponentConsolePong
 		List<Paddle> paddles = new List<Paddle>();
 		WallBouncer mover;
 
-		public PaddleBouncer(GameObject owner, float framesToWait, float speedMultiplier) : base(owner)
+		public PaddleBouncer(float framesToWait, float speedMultiplier)
 		{
 			framesLeft = 0;
 			this.framesToWait = framesToWait;

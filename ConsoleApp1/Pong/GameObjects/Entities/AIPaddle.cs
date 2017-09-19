@@ -7,7 +7,7 @@
 	{
 		public AIPaddle(float attractSpeed) : base()
 		{
-			AddComponent(new Attractee(this, attractSpeed));
+			AddComponent(new Attractee(attractSpeed));
 		}
 
 		//Moves towards the ball

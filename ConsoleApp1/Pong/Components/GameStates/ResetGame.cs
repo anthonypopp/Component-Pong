@@ -12,7 +12,7 @@ namespace ComponentConsolePong
 		string message;
 		private Action resetAction;
 		private Action quitAction;
-		public ResetGame(GameObject owner, Action resetAction, Action quitAction) : base(owner)
+		public ResetGame(Action resetAction, Action quitAction)
 		{
 			this.resetAction = resetAction;
 			this.quitAction = quitAction;
@@ -31,10 +31,7 @@ namespace ComponentConsolePong
 
 		public void OnQuit()
 		{
-			//if (gameEnded)
-			//{
-				quitAction();
-			//}
+			quitAction();
 		}
 
 		public void Reset()

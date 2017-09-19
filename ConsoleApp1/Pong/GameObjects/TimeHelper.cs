@@ -11,8 +11,8 @@ namespace ComponentConsolePong
 		public static bool PLAYING = true;
 		public TimeManager(int scoreToBeat, Action resetAction, Action quitAction) : base()
 		{
-			AddComponent(new EndGame(this, scoreToBeat));
-			AddComponent(new ResetGame(this, resetAction, quitAction));
+			AddComponent(new EndGame(scoreToBeat));
+			AddComponent(new ResetGame(resetAction, quitAction));
 		}
 
 		public void Reset()

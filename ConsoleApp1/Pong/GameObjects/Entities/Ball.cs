@@ -7,10 +7,10 @@
 	{
 		public Ball(float xSpeed, float ySpeed) : base()
 		{
-			AddComponent(new WallBouncer(this, xSpeed, ySpeed, ROOT.rect));
-			AddComponent(new Attractor(this));
-			AddComponent(new PaddleBouncer(this, 1, 1.01f));
-			AddComponent(new Scoreable(this));
+			AddComponent(new WallBouncer(xSpeed, ySpeed, ROOT.rect));
+			AddComponent(new Attractor());
+			AddComponent(new PaddleBouncer(1, 1.01f));
+			AddComponent(new Scoreable());
 		}
 
 		public override void Reset()

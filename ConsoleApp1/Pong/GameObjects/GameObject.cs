@@ -149,8 +149,10 @@ namespace ComponentConsolePong
 		/// </summary>
 		/// <typeparam name="T">A <see cref="GameObject"/></typeparam>
 		/// <param name="component"></param>
-		public void AddComponent<T>(T component) where T : Component
+		/// <returns>returns a reference of this object</returns>
+		public GameObject AddComponent<T>(T component) where T : Component
 		{
+			component.owner = this;
 			//Allow multiple components
 			components.Add(component);
 
@@ -158,6 +160,7 @@ namespace ComponentConsolePong
 			{
 				lookup.Add(typeof(T), component);  //But only return the first occurance of it :/
 			}
+			return this;
 			//Todo, lookup list of same component instead
 		}
 
