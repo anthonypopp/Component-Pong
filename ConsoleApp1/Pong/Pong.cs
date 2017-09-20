@@ -8,38 +8,42 @@ namespace ComponentConsolePong
 	class Pong
 	{
 
-		List<GameObject> gameObjects;
-		Board board;
+		public List<GameObject> gameObjects = new List<GameObject>();
+		Board board = new Board();
 		public bool running = true;
 
 		public Pong()
 		{
-			board = new Board();
 			board.MakeRoot();
-
-			gameObjects = new List<GameObject>();
-			Init(gameObjects);
-
-			board.Init(gameObjects);
-			
+			Init();
 			Reset();
 		}
 
-		public void Init(List<GameObject> gameObjects)
+		public void Init()
 		{
-			gameObjects.Add(new TimeManager(10, Reset, StopGame));
-			gameObjects.Add(new Ball(4, 2));
-			gameObjects.Add(new Ball(3, 4));
-			gameObjects.Add(new PlayerPaddle());
-			gameObjects.Add(new AIPaddle(0.1f));
-			gameObjects.Add(new AIPaddle(0.5f));
-			gameObjects.Add(new TitleMessenger("Let's get ready to Rubleeee!!!!!!"));
-			gameObjects.Add(new CyclingMessageObject("The Croud Goes Wild. ", 30.0f));
-			gameObjects.Add(new ScoreMessenger());
-			gameObjects.Add(new ScoreObject(new Rectangle(0, 0, 100, 2), 1));
-			gameObjects.Add(new ScoreObject(new Rectangle(0, 98, 100,2), 2));
+			Add(new TimeManager(10, Reset, StopGame));
+			Add(new Ball(4, 2));
+			Add(new Ball(3, 4));
+			Add(new PlayerPaddle());
+			Add(new AIPaddle(0.1f));
+			Add(new AIPaddle(0.5f));
+			Add(new TitleMessenger("Let's get ready to Rubleeee!!!!!!"));
+			Add(new CyclingMessageObject("The Croud Goes Wild. ", 30.0f));
+			Add(new ScoreMessenger());
+			Add(new ScoreObject(new Rectangle(0, 0, 100, 2), 1));
+			Add(new ScoreObject(new Rectangle(0, 98, 100,2), 2));
+			board.Init(Add);
 		}
 
+
+		/// <summary>
+		/// Adds a game object to the list of <see cref="gameObjects"/>
+		/// </summary>
+		/// <param name="gameObject">the object to add</param>
+		private void Add(GameObject gameObject)
+		{
+			gameObjects.Add(gameObject);
+		}
 		
 		private void Reset()
 		{

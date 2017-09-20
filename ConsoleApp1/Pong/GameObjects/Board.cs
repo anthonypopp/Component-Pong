@@ -51,10 +51,10 @@ namespace ComponentConsolePong
 		const int WIDTH = 20;
 		const int HEIGHT = 80;
 
-		public void Init(List<GameObject> things)
+		public void Init(Action<GameObject> AddGameObject)
 		{
 
-			 text = new StringBuilder();
+			text = new StringBuilder();
 			paint = new List<List<Cell>>();
 			for (int w = 0; w < WIDTH; w++)
 			{
@@ -62,10 +62,10 @@ namespace ComponentConsolePong
 				for (int h = 0; h < HEIGHT; h++)
 				{
 					paint[w].Add(new Cell());
-					things.Add(paint[w][h]);
+					AddGameObject(paint[w][h]);
 				}
 			}
-			things.Add(this);
+			AddGameObject(this);
 		}
 		
 		public Cell GetCell(float x, float y)
