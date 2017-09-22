@@ -6,12 +6,17 @@ using System.Threading.Tasks;
 
 namespace ComponentConsolePong
 {
+	/// <summary>
+	/// Rotates a message in place, to make a string of text looking like a 90's movie theater
+	/// </summary>
 	class CyclingMessage : Component, Messageable, Resetable, Updateable
 	{
-		float time;
+		//How long it takes for the message to cycle
 		float cycleTime = 0;
+		float time;
 		string message = "";
 		StringBuilder title = new StringBuilder();
+
 		public CyclingMessage(string message, float cycleTime)
 		{
 			this.message = message;

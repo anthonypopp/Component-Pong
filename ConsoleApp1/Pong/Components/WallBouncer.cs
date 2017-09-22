@@ -15,13 +15,13 @@
 		public override void Update(float deltaTime)
 		{
 			base.Update(deltaTime);
-			if (rect.Top() > bounds.Top() || rect.Bottom() <= bounds.Bottom())
-			{
-				speedY *= -1.0f;
-			}
 			if (rect.Right() > bounds.Right() || rect.Left() <= bounds.Left())
 			{
-				speedX *= -1.0f;
+				speed.x *= -1.0f;
+			}
+			if (rect.Top() > bounds.Top() || rect.Bottom() <= bounds.Bottom())
+			{
+				speed.y *= -1.0f;
 			}
 		}
 	}

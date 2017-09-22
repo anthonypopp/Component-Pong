@@ -2,16 +2,14 @@
 
 namespace ComponentConsolePong
 {
+	/// <summary>
+	/// Contains a variety of math related functions
+	/// </summary>
 	public static class MathHelper
 	{
-		public static float Radians(float angle)
-		{
-			return angle * 0.0174533f;
-		}
-		public static float Degrees(float radians)
-		{
-			return radians * 57.2958f;
-		}
+		public static float TO_RADIANS = 0.0174533f;
+		public static float TO_DEGREES = 57.2858f;
+
 		public static float Sin(float radians)
 		{
 			return (float)Math.Sin(radians);

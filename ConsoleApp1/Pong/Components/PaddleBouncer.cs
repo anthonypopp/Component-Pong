@@ -37,7 +37,7 @@ namespace ComponentConsolePong
 			if (IsColliding())
 			{
 				framesLeft = framesToWait;
-				mover.speedY *= -speedMultiplier;
+				mover.speed.y *= -speedMultiplier;
 			}
 		}
 
