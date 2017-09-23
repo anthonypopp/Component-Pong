@@ -26,5 +26,15 @@ namespace ComponentConsolePong
 		{
 			InputManager.Unregister(this);
 		}
+
+		/// <summary>
+		/// Checks if this is of a certain type
+		/// </summary>
+		/// <typeparam name="T">the <see cref="System.Type"/></typeparam>
+		/// <returns></returns>
+		public bool IsAssignableFrom<T>()
+		{
+			return ((typeof(T).IsAssignableFrom(GetType())));
+		}
 	}
 }

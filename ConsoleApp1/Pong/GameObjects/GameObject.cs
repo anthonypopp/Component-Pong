@@ -185,7 +185,7 @@ namespace ComponentConsolePong
 			{
 				if (component.enabled)
 				{
-					if (typeof(Updateable).IsAssignableFrom(component.GetType()))
+					if (component.IsAssignableFrom<Updateable>())
 					{
 						((Updateable)component).Update(deltaTime);
 					}
@@ -200,7 +200,7 @@ namespace ComponentConsolePong
 		{
 			foreach (Component component in components)
 			{
-				if (typeof(Resetable).IsAssignableFrom(component.GetType()))
+				if (component.IsAssignableFrom<Resetable>())
 				{
 					((Resetable)component).Reset();
 				}
@@ -214,7 +214,7 @@ namespace ComponentConsolePong
 		{
 			foreach (Component component in components)
 			{
-				if (typeof(Messageable).IsAssignableFrom(component.GetType()))
+				if (component.IsAssignableFrom<Messageable>())
 				{
 					((Messageable)component).Write();
 				}
@@ -249,6 +249,16 @@ namespace ComponentConsolePong
 			{
 				component.Quit();
 			}
+		}
+
+		/// <summary>
+		/// Checks if this is of a certain type
+		/// </summary>
+		/// <typeparam name="T">the <see cref="System.Type"/></typeparam>
+		/// <returns></returns>
+		public bool IsAssignableFrom<T>()
+		{
+			return ((typeof(T).IsAssignableFrom(GetType())));
 		}
 	}
 }

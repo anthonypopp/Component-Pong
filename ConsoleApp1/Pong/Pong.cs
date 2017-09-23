@@ -7,7 +7,6 @@ namespace ComponentConsolePong
 	/// </summary>
 	class Pong
 	{
-
 		public List<GameObject> gameObjects = new List<GameObject>();
 		Board board = new Board();
 		public bool running = true;
@@ -50,7 +49,7 @@ namespace ComponentConsolePong
 			foreach (GameObject gameObject in gameObjects)
 			{
 				gameObject.ResetComponents();
-				if (typeof(Resetable).IsAssignableFrom(gameObject.GetType()))
+				if (gameObject.IsAssignableFrom<Resetable>())
 				{
 					((Resetable)gameObject).Reset();
 				}
@@ -70,7 +69,7 @@ namespace ComponentConsolePong
 			foreach (GameObject gameObject in gameObjects)
 			{
 				gameObject.WriteComponents();
-				if (typeof(Messageable).IsAssignableFrom(gameObject.GetType()))
+				if (gameObject.IsAssignableFrom<Messageable>())
 				{
 					((Messageable)gameObject).Write();
 				}
@@ -81,7 +80,7 @@ namespace ComponentConsolePong
 		{
 			foreach (GameObject gameObject in gameObjects)
 			{
-				if (typeof(Drawable).IsAssignableFrom(gameObject.GetType()))
+				if (gameObject.IsAssignableFrom<Drawable>())
 				{
 					((Drawable)gameObject).Draw(board);
 				}
