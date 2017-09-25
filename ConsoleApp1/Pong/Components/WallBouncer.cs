@@ -5,23 +5,24 @@
 	/// </summary>
 	public class WallBouncer : Mover
 	{
+		Rectangle bounds;
+
 		public WallBouncer(float speedX, float speedY, Rectangle bounds)
 			: base(speedX, speedY)
 		{
 			this.bounds = bounds;
 		}
 
-		Rectangle bounds;
 		public override void Update(float deltaTime)
 		{
 			base.Update(deltaTime);
 			if (rect.Right() > bounds.Right() || rect.Left() <= bounds.Left())
 			{
-				speed.x *= -1.0f;
+				speed.FlipX();
 			}
 			if (rect.Top() > bounds.Top() || rect.Bottom() <= bounds.Bottom())
 			{
-				speed.y *= -1.0f;
+				speed.FlipY();
 			}
 		}
 	}

@@ -5,9 +5,9 @@
 	/// </summary>
 	public enum KeyAction
 	{
-		HELD_DOWN,
+		PRESSED,
 		JUST_PRESSED,
 		JUST_RELEASED,
-		NOT_PRESSED
+		RELEASED
 	}
 }

@@ -1,7 +1,7 @@
 ﻿namespace ComponentConsolePong
 {
 	/// <summary>
-	/// Allows a <code>GameObject</code> or <code>Component</code> to be updated each frame
+	/// Allows a <see cref="GameObject"/> or <see cref="Component"/> to be updated each frame
 	/// </summary>
 	public interface Updateable
 	{

@@ -4,7 +4,7 @@
 	/// <summary>
 	/// Contains an X,Y, Width, and Height as <see cref="Vector2"/>
 	/// </summary>
-	public class Rectangle
+	public sealed class Rectangle
 	{
 		public Rectangle()
 		{
@@ -114,10 +114,17 @@
 			return dimention.y;
 		}
 
+		/// <summary>
+		/// The half width of this <see cref="Rectangle"/> (width / 2)
+		/// </summary
 		public float HalfWidth()
 		{
 			return Width() / 2.0f;
 		}
+
+		/// <summary>
+		/// The half height of this <see cref="Rectangle"/> (height / 2)
+		/// </summary
 		public float HalfHeight()
 		{
 			return Height() / 2.0f;

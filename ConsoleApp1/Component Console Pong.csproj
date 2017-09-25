@@ -70,6 +70,7 @@
     <Compile Include="Pong\GameObjects\Entities\AIPaddle.cs" />
     <Compile Include="Pong\GameObjects\Entities\Ball.cs" />
     <Compile Include="Pong\GameObjects\Board.cs" />
+    <Compile Include="Pong\Interfaces\Quitable.cs" />
     <Compile Include="Pong\Logging\Log.cs" />
     <Compile Include="Pong\Math\MathHelper.cs" />
     <Compile Include="Pong\Components\Component.cs" />

@@ -34,6 +34,33 @@ namespace ComponentConsolePong
 			y += amountY;
 		}
 
+		/// <summary>
+		/// Moves this vector by a given x and y amount (+=)
+		/// </summary>
+		/// <param name="amountX">the amount to move on the x-axis</param>
+		/// <param name="amountY">the amount ot move on the y-axis</param>
+		public void MoveBy(Vector2 amount)
+		{
+			x += amount.x;
+			y += amount.y;
+		}
+
+		/// <summary>
+		/// Multiplies the x value by -1
+		/// </summary>
+		public void FlipX()
+		{
+			x *= -1.0f;
+		}
+
+		/// <summary>
+		/// Multiplies the y value by -1
+		/// </summary>
+		public void FlipY()
+		{
+			y *= -1.0f;
+		}
+
 		#region Operators
 		public static Vector2 operator *(Vector2 l, float r)
 		{

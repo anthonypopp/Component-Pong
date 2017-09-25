@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ComponentConsolePong
+﻿namespace ComponentConsolePong
 {
+	/// <summary>
+	/// A <see cref="GameObject"/> that shows a <see cref="CyclingMessage"/> at a certain rate
+	/// </summary>
 	class CyclingMessageObject : GameObject
 	{
 		public CyclingMessageObject(string title, float cycleTime)

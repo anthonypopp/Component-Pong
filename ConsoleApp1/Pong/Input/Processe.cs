@@ -27,9 +27,9 @@ namespace ComponentConsolePong.Input
 		{
 			switch (action)
 			{
-				case KeyAction.HELD_DOWN:
+				case KeyAction.PRESSED:
 					return curActivated;
-				case KeyAction.NOT_PRESSED:
+				case KeyAction.RELEASED:
 					return !curActivated;
 				case KeyAction.JUST_PRESSED:
 					return curActivated && !prevActivated;
