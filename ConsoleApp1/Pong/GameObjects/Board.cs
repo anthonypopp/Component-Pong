@@ -7,77 +7,10 @@ namespace ComponentConsolePong
 	/// <summary>
 	/// A <see cref="GameObject"/> that allows text to be rendered in Raster Format to the console
 	/// </summary>
-	public class Board : GameObject, Drawable, Resetable
+	public partial class Board : GameObject, Drawable, Resetable
 	{
 		public Board() : base()
 		{
-		}
-
-		/// <summary>
-		/// A <see cref="BorderCell"/> that flashes like a cool 90's resturant
-		/// </summary>
-		private class FlashingBorderCell : BorderCell, Updateable, Drawable
-		{
-			float totalTime;
-			float flashAround; //Time which this should change characters
-			Cell myCell;
-
-			public override void Reset()
-			{
-				if (!owner.Is<Cell>())
-				{
-					throw new Exception("Owner should be a Cell");
-				}
-				myCell = (Cell)owner;
-				totalTime = 0;
-				flashAround = myCell.position.Manhattan() % 8;
-				base.Reset();
-			}
-			public void Update(float deltaTime)
-			{
-				totalTime += deltaTime;
-			}
-
-			public void Draw(Board board)
-			{
-				if (((int)(totalTime)) % 9 == flashAround)
-				{
-					myCell.Letter = GetChar();
-				}
-			}
-
-			public char GetChar()
-			{
-				return '^';
-			}
-		}
-
-		/// <summary>
-		/// Represents a <see cref="Cell"/> that is on the border of the game
-		/// </summary>
-		private class BorderCell : Component, Resetable
-		{
-			public virtual void Reset()
-			{
-				GetComponent<LetterSetter>().letter = '$';
-			}
-		}
-
-		/// <summary>
-		/// A <see cref="Component"/> Responsible for updating the "pixel" or character being rendered in a <see cref="Cell"/>
-		/// </summary>
-		private class LetterSetter : Component, Updateable
-		{
-			public char letter;
-			public LetterSetter(char letter) :base()
-			{
-				this.letter = letter;
-			}
-
-			public void Update(float deltaTime)
-			{
-				((Cell)owner).Letter = letter;
-			}
 		}
 
 		/// <summary>

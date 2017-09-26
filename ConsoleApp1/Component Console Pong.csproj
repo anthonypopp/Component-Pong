@@ -59,10 +59,13 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pong\Components\Board\FlashingBorderCell.cs" />
     <Compile Include="Pong\Components\CyclingMessage.cs" />
     <Compile Include="Pong\Components\WallBouncer.cs" />
     <Compile Include="Pong\Components\GameStates\EndGame.cs" />
+    <Compile Include="Pong\Components\Board\BorderCell.cs" />
     <Compile Include="Pong\GameObjects\CyclingMessageObject.cs" />
+    <Compile Include="Pong\Components\Board\LetterSetter.cs" />
     <Compile Include="Pong\Interfaces\Drawable.cs" />
     <Compile Include="Pong\GameObjects\GameObject.cs" />
     <Compile Include="Pong\GameObjects\DrawableObject.cs" />
