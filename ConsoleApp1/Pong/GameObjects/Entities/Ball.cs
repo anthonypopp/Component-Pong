@@ -18,6 +18,7 @@
 			base.Reset();
 			rect.Set(50, 50, 5, 5).Centerfy();
 		}
+
 		public override char GetChar()
 		{
 			return 'O';

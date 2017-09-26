@@ -8,4 +8,11 @@
 		void Draw(Board board);
 		char GetChar();
 	}
+
+	/// <summary>
+	/// Allows <see cref="Component"/>s on a <see cref="GameObject"/> to be drawn
+	/// </summary>
+	public interface CoponentDrawable
+	{
+	}
 }

@@ -194,6 +194,21 @@ namespace ComponentConsolePong
 		}
 
 		/// <summary>
+		/// Draws all <see cref="Drawable"/> components
+		/// </summary>
+		/// <param name="board">the board to draw on</param>
+		public void DrawComponents(Board board)
+		{
+			foreach (Component component in components)
+			{
+				if (component.IsAssignableFrom<Drawable>())
+				{
+					((Drawable)component).Draw(board);
+				}
+			}
+		}
+
+		/// <summary>
 		/// Resets all <see cref="Resetable"/> components
 		/// </summary>
 		public void ResetComponents()

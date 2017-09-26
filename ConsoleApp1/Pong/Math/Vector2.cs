@@ -60,6 +60,14 @@ namespace ComponentConsolePong
 		{
 			y *= -1.0f;
 		}
+		
+		/// <summary>
+		/// Returns the manhatten distance (x + y)
+		/// </summary>
+		public float Manhattan()
+		{
+			return x + y;
+		}
 
 		#region Operators
 		public static Vector2 operator *(Vector2 l, float r)

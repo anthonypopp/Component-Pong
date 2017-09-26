@@ -80,6 +80,10 @@ namespace ComponentConsolePong
 		{
 			foreach (GameObject gameObject in gameObjects)
 			{
+				if (gameObject.IsAssignableFrom<CoponentDrawable>())
+				{
+					gameObject.DrawComponents(board);
+				}
 				if (gameObject.IsAssignableFrom<Drawable>())
 				{
 					((Drawable)gameObject).Draw(board);

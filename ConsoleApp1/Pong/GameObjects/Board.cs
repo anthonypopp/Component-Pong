@@ -14,13 +14,62 @@ namespace ComponentConsolePong
 		}
 
 		/// <summary>
-		/// A Component Responsible for updating the "pixel" or character being rendered in a <see cref="Cell"/>
+		/// A <see cref="BorderCell"/> that flashes like a cool 90's resturant
+		/// </summary>
+		private class FlashingBorderCell : BorderCell, Updateable, Drawable
+		{
+			float totalTime;
+			float flashAround; //Time which this should change characters
+			Cell myCell;
+
+			public override void Reset()
+			{
+				if (!owner.Is<Cell>())
+				{
+					throw new Exception("Owner should be a Cell");
+				}
+				myCell = (Cell)owner;
+				totalTime = 0;
+				flashAround = myCell.position.Manhattan() % 8;
+				base.Reset();
+			}
+			public void Update(float deltaTime)
+			{
+				totalTime += deltaTime;
+			}
+
+			public void Draw(Board board)
+			{
+				if (((int)(totalTime)) % 9 == flashAround)
+				{
+					myCell.Letter = GetChar();
+				}
+			}
+
+			public char GetChar()
+			{
+				return '^';
+			}
+		}
+
+		/// <summary>
+		/// Represents a <see cref="Cell"/> that is on the border of the game
+		/// </summary>
+		private class BorderCell : Component, Resetable
+		{
+			public virtual void Reset()
+			{
+				GetComponent<LetterSetter>().letter = '$';
+			}
+		}
+
+		/// <summary>
+		/// A <see cref="Component"/> Responsible for updating the "pixel" or character being rendered in a <see cref="Cell"/>
 		/// </summary>
 		private class LetterSetter : Component, Updateable
 		{
-			char letter;
-			public LetterSetter(Cell owner, char letter)
-				:base()
+			public char letter;
+			public LetterSetter(char letter) :base()
 			{
 				this.letter = letter;
 			}
@@ -34,46 +83,106 @@ namespace ComponentConsolePong
 		/// <summary>
 		/// Represents a single "pixel" or character on the screen
 		/// </summary>
-		public class Cell : GameObject
+		public class Cell : GameObject, CoponentDrawable
 		{
 			private char letter = '.';
+			public Vector2 position = new Vector2();
 
 			public char Letter { get => letter; set => letter = value; }
 
-			public Cell(): base()
+			public Cell(int x, int y): base()
 			{
-				AddComponent(new LetterSetter(this, '.'));
+				position.x = x;
+				position.y = y;
+				AddComponent(new LetterSetter('.'));
 			}
 		}
 
 		List<List<Cell>> paint;
+
+		/// <summary>
+		/// paint cells that compose of the boarder
+		/// </summary>
+		List<Cell> border;
+
 		StringBuilder text;
 		const int WIDTH = 20;
 		const int HEIGHT = 80;
+		const int BORDER = 2;
 
 		public void Init(Action<GameObject> AddGameObject)
 		{
 
 			text = new StringBuilder();
 			paint = new List<List<Cell>>();
+
 			for (int w = 0; w < WIDTH; w++)
 			{
 				paint.Add(new List<Cell>());
 				for (int h = 0; h < HEIGHT; h++)
 				{
-					paint[w].Add(new Cell());
+					paint[w].Add(new Cell(w,h));
 					AddGameObject(paint[w][h]);
 				}
 			}
+
 			AddGameObject(this);
+
+			InitBoarder();
 		}
-		
-		public Cell GetCell(float x, float y)
+
+		private void InitBoarder()
 		{
-			int xIndex = (int)((x * WIDTH) / 100.0f);
-			int yIndex = (int)((y * HEIGHT) / 100.0f);
-			xIndex = MathHelper.Clamp(xIndex, 0, WIDTH - 1);
-			yIndex = MathHelper.Clamp(yIndex, 0, HEIGHT - 1);
+			border = new List<Cell>();
+
+			//Add boarder in circular order
+			int index = 0;
+			int thickness = 0;
+			for (thickness = 0; thickness < BORDER; thickness++)
+			{
+				//Top
+				for (index = thickness; index < WIDTH - 1 - thickness; index++)
+				{
+					border.Add(paint[index][thickness]);
+				}
+				//Right
+				for (index = thickness; index < HEIGHT - 1 - thickness; index++)
+				{
+					border.Add(paint[WIDTH - 1 - thickness][index]);
+				}
+				//Bottom
+				for (index = WIDTH - 1 - thickness; index > thickness; index--)
+				{
+					border.Add(paint[index][HEIGHT - 1 - thickness]);
+				}
+				//Left
+				for (index = HEIGHT - 1 - thickness; index > thickness; index--)
+				{
+					border.Add(paint[thickness][index]);
+				}
+			}
+			
+			foreach(Cell cell in border)
+			{
+				cell.AddComponent(new FlashingBorderCell());
+			}
+		}
+
+		public Cell GetCell(float x, float y, bool useBorder = true)
+		{
+			int width = WIDTH;
+			int height = HEIGHT;
+			if (useBorder)
+			{
+				width -= BORDER * 2;
+				height -= BORDER * 2;
+			}
+			int x0 = useBorder ? BORDER : 0;
+			int y0 = useBorder ? BORDER : 0;
+			int xIndex = x0 + (int)(((x * width) / 100.0f) + 0.5f);
+			int yIndex = y0 + (int)(((y * height) / 100.0f) + 0.5f);
+			xIndex = MathHelper.Clamp(xIndex, x0, Math.Min(width, WIDTH - 1));
+			yIndex = MathHelper.Clamp(yIndex, y0, Math.Min(height, HEIGHT - 1));
 			return paint[xIndex][yIndex];
 		}
 		

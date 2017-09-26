@@ -50,5 +50,14 @@ namespace ComponentConsolePong
 		{
 			return ((typeof(T).IsAssignableFrom(GetType())));
 		}
+
+		/// <summary>
+		/// Returns a component attached to the owner
+		/// </summary>
+		/// <typeparam name="T">A <see cref="Component>"/></typeparam>
+		public T GetComponent<T>() where T : Component
+		{
+			return owner.GetComponent<T>();
+		}
 	}
 }
